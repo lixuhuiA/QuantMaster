@@ -1,4 +1,3 @@
-
 import React, { useMemo } from 'react';
 import { 
   ComposedChart, Line, Area, XAxis, YAxis, CartesianGrid, Tooltip, 
@@ -321,9 +320,11 @@ export const Dashboard: React.FC<DashboardProps> = ({ data, settings }) => {
                 <span className="w-2 h-2 rounded-full bg-emerald-500"></span> 目标达成热力图 (Goal Achievement)
               </h3>
               <div className="flex flex-wrap gap-3 text-[10px] text-slate-500">
-                 <div className="flex items-center gap-1"><div className="w-3 h-3 rounded bg-emerald-600"></div> 超额 (>100%)</div>
+                 {/* 修改点：> 改为 &gt; */}
+                 <div className="flex items-center gap-1"><div className="w-3 h-3 rounded bg-emerald-600"></div> 超额 (&gt;100%)</div>
                  <div className="flex items-center gap-1"><div className="w-3 h-3 rounded bg-emerald-400"></div> 达标 (100%)</div>
-                 <div className="flex items-center gap-1"><div className="w-3 h-3 rounded bg-amber-300"></div> 接近 (>80%)</div>
+                 {/* 修改点：> 改为 &gt; */}
+                 <div className="flex items-center gap-1"><div className="w-3 h-3 rounded bg-amber-300"></div> 接近 (&gt;80%)</div>
                  <div className="flex items-center gap-1"><div className="w-3 h-3 rounded bg-rose-200"></div> 未达标</div>
               </div>
            </div>

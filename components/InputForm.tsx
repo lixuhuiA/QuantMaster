@@ -3,6 +3,19 @@ import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import { MonthlyRecord, ExtraItem, LiquidAssetItem, LoanRecord, AppSettings } from '../types';
 import { DEFAULT_LIQUID_ACCOUNTS } from '../constants';
 
+// --- 新增这个函数 ---
+const generateUUID = () => {
+  // 如果浏览器支持原生安全随机数，就用原生的
+  if (typeof crypto !== 'undefined' && crypto.randomUUID) {
+    return crypto.randomUUID();
+  }
+  // 否则用这个简单的数学随机数算法（兼容 http://192.168...）
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  });
+};
+
 interface InputFormProps {
   initialData?: MonthlyRecord;
   lastRecord?: MonthlyRecord;
@@ -82,7 +95,7 @@ export const InputForm: React.FC<InputFormProps> = ({ initialData, lastRecord, g
 
   const [formData, setFormData] = useState<MonthlyRecord>(
     initialData || {
-      id: crypto.randomUUID(),
+      id: generateUUID(),
       month: new Date().toISOString().slice(0, 7),
       recordDate: new Date().toISOString(),
       targetProvident: defaultProvidentIncome, // Goal snapshot matches the net retention
@@ -206,13 +219,13 @@ export const InputForm: React.FC<InputFormProps> = ({ initialData, lastRecord, g
   const addListItem = (listKey: 'extraIncome' | 'extraExpenses' | 'liquidAssets' | 'sideIncomeDetail', defaultItem: any) => {
     setFormData(prev => ({
       ...prev,
-      [listKey]: [...(prev[listKey] as any[] || []), { ...defaultItem, id: crypto.randomUUID() }]
+      [listKey]: [...(prev[listKey] as any[] || []), { ...defaultItem, id: generateUUID() }]
     }));
   };
   
   const addNewLoan = () => {
     const newLoan: LoanRecord = {
-        id: crypto.randomUUID(),
+        id: generateUUID(),
         borrower: '',
         date: new Date().toISOString().slice(0,10),
         amount: 0,

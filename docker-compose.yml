@@ -1,0 +1,25 @@
+# docker-compose.yml (位于项目根目录)
+version: '3.8'
+
+services:
+  # 后端服务
+  backend:
+    build: ./backend
+    container_name: quantmaster-backend
+    ports:
+      - "8002:8000"
+    volumes:
+      # 将宿主机的 ./data 目录挂载进去，保证数据库文件不丢失
+      - ./data:/data
+    environment:
+      # 告诉代码数据库存在哪里
+      - DB_PATH=/data/quantmaster.db
+
+  # 前端服务
+  frontend:
+    build: .
+    container_name: quantmaster-frontend
+    ports:
+      - "3002:80" # 浏览器访问 localhost:3000
+    depends_on:
+      - backend

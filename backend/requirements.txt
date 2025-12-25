@@ -1,0 +1,4 @@
+fastapi==0.109.0
+uvicorn==0.27.0
+pydantic==2.6.0
+# sqlite-utils 在本方案中其实用不到，可以直接用标准库 sqlite3，为了精简可以去掉，保留也没事
